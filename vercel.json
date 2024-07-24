@@ -1,0 +1,25 @@
+{
+    "functions": {
+        "api/index.py": {
+            "maxDuration": 60
+        }
+    },
+    "routes": [
+        {
+            "src": "/api/(.*)",
+            "dest": "api/index.py",
+            "methods": ["GET", "POST"],
+            "headers": {
+                "Cache-Control": "no-cache"
+            }
+        },
+        {
+            "src": "/(.*)",
+            "dest": "api/index.py",
+            "methods": ["GET", "POST"],
+            "headers": {
+                "Cache-Control": "no-cache"
+            }
+        }
+    ]
+}
