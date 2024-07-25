@@ -1,3 +1,5 @@
 Flask
 shazamio
 requests
+quart 
+uvicorn
