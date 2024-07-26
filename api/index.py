@@ -79,7 +79,11 @@ def recognize_song_route():
     audio_data = request.files.get('audio')
     if not audio_data:
         return jsonify({'error': 'Audio file is required'}), 400
-    song_data = asyncio.create_task(recognize_song(audio_data.read()))
+
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    song_data = loop.run_until_complete(recognize_song(audio_data.read()))
+
     return jsonify(song_data)
 
 @app.route('/city_top_tracks', methods=['POST'])
@@ -141,4 +145,7 @@ def related_tracks_route():
     return jsonify(related_tracks)
 
 def run_flask_app():
-    app.run
+    app.run(debug=True, use_reloader=False)
+
+if __name__ == '__main__':
+    run_flask_app()
