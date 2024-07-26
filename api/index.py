@@ -15,13 +15,9 @@ async def search_artist(query, limit):
     artists = result.get('artists', {}).get('hits', [])
     return artists[:limit]
 
-async def recognize_song(audio_data):
-    return await shazam.recognize_song(audio_data)
-
-async def top_world_tracks(country_code, limit):
-    result = await shazam.top_world_tracks(country_code=country_code)
-    tracks = result.get('tracks', [])
-    return tracks[:limit]
+async def recognize_song(file_bytes)
+    result = await shazam.recognize_song(file_bytes)
+    return result
 
 async def city_top_tracks(country_code, city_name, limit):
     result = await shazam.city_top_tracks(country_code=country_code, city_name=city_name)
@@ -81,14 +77,10 @@ def search_artist_route():
 @app.route('/recognize-song', methods=['POST'])
 def recognize_song_route():
     audio_data = request.files.get('audio')
-
     if not audio_data:
         return jsonify({'error': 'Audio file is required'}), 400
-
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
     try:
-        song_data = loop.run_until_complete(recognize_song(audio_data))
+        song_data = asyncio.create_task(recognize_song(audio_data))
         return jsonify(song_data)
     except Exception as e:
         return jsonify({'error': f'Error recognizing song: {str(e)}'}), 500
@@ -175,3 +167,5 @@ def run_flask_app():
 
 if __name__ == '__main__':
     run_flask_app()
+    
+    
