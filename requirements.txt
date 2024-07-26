@@ -3,3 +3,4 @@ shazamio
 requests
 quart 
 uvicorn
+gunicorn
